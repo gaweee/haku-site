@@ -1,0 +1,18 @@
+
+/* ----------------------------------------------------------------
+
+	particles.scss
+
+-----------------------------------------------------------------*/
+#particles {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 100;
+}
+
+
+.particles-fg {
+    position: relative;
+    z-index: 200;
+}
