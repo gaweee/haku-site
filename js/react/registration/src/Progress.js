@@ -4,7 +4,7 @@ import clsx from 'clsx';
 const Progress = ({ stage = 1, onJump }) => {
 
     const change = (newStage) => {
-        if (typeof onJump === 'function') onJump(newStage);
+        if (stage !== 3 && typeof onJump === 'function') onJump(newStage);
     };
     
 	return (

@@ -1,2 +1,13 @@
+# Logs
+logs
+*.log
+
+node_modules/
 .DS_Store
+package-lock.json
+*.bak
+.vscode/
 js/react/*/public/images/
+js/react/*/build/images/
+js/react/*/build/static/css
+js/react/*/build/*.*
