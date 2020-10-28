@@ -7,7 +7,7 @@ import AddressForm from './AddressForm';
 
 import config from './config';
 
-const Registration = () => {
+const Registration = (props) => {
 	const [profile, setProfile] = useState();
 	const [stage, setStage] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
@@ -16,9 +16,15 @@ const Registration = () => {
 	const setProfileFragment = useCallback((fragment) => {
 		const newProfile = { ...profile, ...fragment }
 		setProfile(newProfile);
-		const promise = (stage !== 2) ? Promise.resolve() : axios.post(`${config.API_DOMAIN}/customers/register`, newProfile);
 
-		promise
+		new Promise((resolve) => {
+				if (stage === 2) {
+					setIsLoading(true);
+					return axios.post(`${config.API_DOMAIN}/customers/register`, newProfile);
+				}
+				
+				resolve();
+			})
 			.then((msg) => {
 				console.log(msg);
 				setStage((stage) => stage + 1);
@@ -27,26 +33,28 @@ const Registration = () => {
 				setErrors(err?.response?.data?.errors || []);
 				setStage(1);
 			});
+			// eslint-disable-next-line
 	}, [stage]);
 
 	const cJump = useCallback((newStage) => {
 		setStage((stage) => newStage || ++stage);
+		// eslint-disable-next-line
 	}, []);
 
-	const props = { stage, profile, isLoading, errors, onJump: cJump, onSave: setProfileFragment };
+	const formProps = { stage, profile, isLoading, errors, onJump: cJump, onSave: setProfileFragment };
 
 	return (
 		<>
 			<Progress stage={stage} onJump={cJump} />
 
-			{ stage === 1 && (<ProfileForm {...props} />)}
-			{ stage === 2 && (<AddressForm {...props} />)}
+			{ stage === 1 && (<ProfileForm {...formProps} />)}
+			{ stage === 2 && (<AddressForm {...formProps} />)}
 			{ stage === 3 && (
 				<div className='heading-block center border-bottom-0'>
 					<h3 className='font-weight-semibold uppercase'>Almost done, verify your contact details</h3>
 					<span>Check your mailbox and mobile for verification links</span>
                     
-                    <div className='mt-3'><img src='/images/illustrations/verification.png' width='600px' /></div>
+                    <div className='mt-3'><img src='images/illustrations/verification.png' width='600px' /></div>
 				</div>
 			)}
 		</>

@@ -15,7 +15,7 @@ const ProfileForm = ({ profile, onSave, errors: remoteErrors, isLoading = false 
     const recaptchaRef = useRef();
 
 	 // React Hook Form and Validation Details
-	 const { register, handleSubmit, setValue, errors, setError } = useForm({
+	 const { register, handleSubmit, errors, setError } = useForm({
         defaultValues: { firstName: 'Gary', lastName: 'Teo', email: 'gary@wits.sg', mobileNo: '+6596577996', gender: 'M', password: 'P@ssw0rd!', tnc: 1, ...profile },
         resolver: yupResolver(Yup.object().shape({
             firstName: Yup.string().label('First Name').max(255).required(),

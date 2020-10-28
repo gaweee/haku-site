@@ -9,7 +9,7 @@ import styles from './App.module.scss';
 
 const AddressForm = ({ stage, profile, onSave, onJump, errors: remoteErrors, isLoading = false }) => {
 	 // React Hook Form and Validation Details
-	 const { register, handleSubmit, setValue, errors, setError } = useForm({
+	 const { register, handleSubmit, errors, setError } = useForm({
         defaultValues: { address: '50 Scotts Road', addressApt: '#04-03', postalCode: '228242', ...profile },
         resolver: yupResolver(Yup.object().shape({
             address: Yup.string().label('Address').required(),
@@ -32,6 +32,7 @@ const AddressForm = ({ stage, profile, onSave, onJump, errors: remoteErrors, isL
 
     useEffect(() => {
         for (const error of _.castArray(remoteErrors)) setError(error.field, { type: 'manual', message: error.message });
+        // eslint-disable-next-line
     }, [remoteErrors]);
 
 	return (

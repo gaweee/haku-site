@@ -5,13 +5,13 @@ import config from './config';
 
 const Verification = (props) => {
     const [isVerified, setIsVerified] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (props.match.params && props.match.params.otp) {
-            const otp = props.match.params.otp;
-            console.log(otp);
-
+        const otp = new URLSearchParams(props.location.search).get('otp');
+        console.log(otp);
+        if (otp) {
+            setIsLoading(true);
             axios.get(`${config.API_DOMAIN}/customers/verify/${otp}`)
                 .then((msg) => {
                     setIsVerified(true);
@@ -23,6 +23,7 @@ const Verification = (props) => {
                     setIsLoading(false);
                 });
         }
+        // eslint-disable-next-line
     }, []);
 
 	return (
@@ -43,14 +44,14 @@ const Verification = (props) => {
                             <span>Login to the Customer Portal to manage your bookings!</span>
                             <a className='btn btn-primary btn-lg mt-3 gradient-purple-blue ' href='#'>Console Login</a>
 
-                            <div className='mt-3'><img src='/images/illustrations/verified.png' width='600px' /></div>
+                            <div className='mt-3'><img src='images/illustrations/verified.png' width='600px' /></div>
                         </>
                     ) : (
                         <>
                             <h3 className='font-weight-semibold uppercase'>Invalid Verification Token</h3>
                             <span>Perhaps its a typo? Check your mail or mobile messages and use the link provided</span>
 
-                            <div className='mt-3'><img src='/images/illustrations/error.png' width='600px' /></div>
+                            <div className='mt-3'><img src='images/illustrations/error.png' width='600px' /></div>
                         </>
                     )}
                 </>
