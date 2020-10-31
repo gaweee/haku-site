@@ -20,7 +20,7 @@ const Registration = (props) => {
 		new Promise((resolve) => {
 				if (stage === 2) {
 					setIsLoading(true);
-					return axios.post(`${config.API_DOMAIN}/customers/register`, newProfile);
+					return resolve(axios.post(`${config.API_DOMAIN}/customers/register`, newProfile));
 				}
 				
 				resolve();
@@ -32,7 +32,8 @@ const Registration = (props) => {
 			.catch((err) => {
 				setErrors(err?.response?.data?.errors || []);
 				setStage(1);
-			});
+			})
+			.finally(() => setIsLoading(false));
 			// eslint-disable-next-line
 	}, [stage]);
 
