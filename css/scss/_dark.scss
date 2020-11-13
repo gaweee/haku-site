@@ -1384,7 +1384,8 @@ body #side-panel.dark {
 }
 
 .dark .heading-block > span:not(.before-heading) {
-	color: rgba($white,0.65);
+	// color: rgba($white,0.65);
+	color: $white;
 }
 
 .dark .heading-block::after {
