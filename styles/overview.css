@@ -784,7 +784,8 @@ form input[type="email"]{
 	}
 }
 
-form input[type="button"]{
+form input[type="button"],
+form input[type="submit"]{
 	border:0;
 	border-radius:10px;
 	padding:10px 20px;
